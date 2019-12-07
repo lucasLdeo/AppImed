@@ -19,11 +19,15 @@ class iMedic extends StatelessWidget {
   }
 }
 
+
+
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _LoginPageState();
   }
+
+
 }
 
 class _LoginPageState extends State<LoginPage>
@@ -155,11 +159,13 @@ class _LoginPageState extends State<LoginPage>
                 onPressed: () {
                   //Use`Navigator` widget to push the second screen to out stack of screens
                   Navigator.of(context).push(
+
                       MaterialPageRoute<Null>(builder: (BuildContext context) {
                     return new SecondScreen();
                   }));
                 },
                 child: Text('Login'.toUpperCase(),
+
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 shape: RoundedRectangleBorder(
@@ -215,7 +221,7 @@ class _LoginPageState extends State<LoginPage>
                             color: Colors.white,
                           ),
                           Text(
-                            ' Login com Facebook',
+                            ' Login com Faceboosk',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

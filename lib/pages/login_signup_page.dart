@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:imed/pages/cadastro_Medico.dart';
 
-
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
+
   final BaseAuth auth;
   final VoidCallback loginCallback;
+
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
 }
@@ -34,7 +35,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   void validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
-
     });
     if (validateAndSave()) {
       String userId = "";
@@ -88,9 +88,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Login Screen'),
-        ),
+        resizeToAvoidBottomPadding: false,
         body: Stack(
           children: <Widget>[
             _showForm(),
@@ -110,22 +108,52 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget _showForm() {
-    return new Container(
-        padding: EdgeInsets.all(16.0),
-        child: new Form(
-          key: _formKey,
-          child: new ListView(
-            shrinkWrap: true,
+    return new Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
             children: <Widget>[
-              showLogo(),
-              showEmailInput(),
-              showPasswordInput(),
-              showPrimaryButton(),
-              showSecondaryButton(),
-              showErrorMessage(),
+              new Form(
+                key: _formKey,
+                child: new ListView(
+                  padding: EdgeInsets.all(0.0),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    showLogo(),
+                    Container(
+
+                      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Column(
+                        children: <Widget>[
+                          showEmailInput(),
+                          showPasswordInput(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(85, 20, 85, 0),
+                      child: showPrimaryButton(),
+                    ),
+                    showSecondaryButton(),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(16, 0, 161, 0),
+                      child: Column(
+                        children: <Widget>[
+                          showFacebookButton(),
+                          showGoogleButton(),
+                        ],
+                      ),
+                    ),
+                    showErrorMessage(),
+                    SizedBox(height: 90,)
+                  ],
+                ),
+              )
             ],
-          ),
-        ));
+          )),
+    );
   }
 
   Widget showErrorMessage() {
@@ -145,23 +173,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
-  Widget showLogo() {
-    return new Hero(
-      tag: 'hero',
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 48.0,
-          child: Image.asset('assets/flutter-icon.png'),
-        ),
-      ),
-    );
-  }
-
   Widget showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -172,8 +186,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Campo do email não pode estar vazio'
-            '' : null,
+        validator: (value) => value.isEmpty
+            ? 'Campo do email não pode estar vazio'
+                ''
+            : null,
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -192,8 +208,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.lock,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Campo da senha não pode'
-            ' estar vazio' : null,
+        validator: (value) => value.isEmpty
+            ? 'Campo da senha não pode'
+                ' estar vazio'
+            : null,
         onSaved: (value) => _password = value.trim(),
       ),
     );
@@ -204,28 +222,113 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         child: new Text(
             _isLoginForm ? 'Criar uma conta' : 'Have an account? Sign in',
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-        onPressed: (){
-          Navigator.of(context).push(
-              MaterialPageRoute<Null>(builder: (BuildContext context) {
-                return new Cadastro();
-              }));
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+            return new Cadastro();
+          }));
         });
   }
 
+  Widget showFacebookButton() {
+    return new RaisedButton(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 28),
+          Text(
+            ' Login com Facebook',
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, height: 1.5),
+          )
+        ],
+      ),
+      onPressed: () {},
+      color: Color(0xFF4267b2),
+    );
+  }
+
+  Widget showGoogleButton() {
+    return new RaisedButton(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 28),
+          Text(
+            ' Login com Google',
+            style: TextStyle(
+                color: Color(0xFFF7F7F7),
+                fontWeight: FontWeight.bold,
+                height: 1.5),
+          )
+        ],
+      ),
+      onPressed: () {},
+      color: Color(0xFFdd4b39),
+    );
+  }
+
   Widget showPrimaryButton() {
-    return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.blue,
-            child: new Text(_isLoginForm ? 'Login' : 'Criar uma conta',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
+    return new Container(
+      height: 45.0,
+      width: 0,
+      child: FlatButton(
+        onPressed: validateAndSubmit,
+        child: Text('Login'.toUpperCase(),
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16)),
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF9DEBFF), Color(0xFF91AFFF)],
           ),
-        ));
+          borderRadius: BorderRadius.all(Radius.circular(50))),
+    );
+  }
+
+  Widget showLogo() {
+    return new Padding(
+      padding: EdgeInsets.all(0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 225,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF9DEBFF), Color(0xFF91AFFF)],
+            ),
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Spacer(),
+            Align(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.healing,
+                size: 90,
+                color: Colors.white,
+              ),
+            ),
+            Spacer(),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 32, right: 32),
+                child: Text(
+                  'Saúde na palma da sua mão'.toUpperCase(),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
