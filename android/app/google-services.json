@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "568375643064",
+    "firebase_url": "https://imedteste-2d482.firebaseio.com",
+    "project_id": "imedteste-2d482",
+    "storage_bucket": "imedteste-2d482.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568375643064:android:59ccdc44c0a34656459d4d",
+        "android_client_info": {
+          "package_name": "com.dcs.imed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568375643064-0v4sftbk5sji2272t2mtgvomfjm8lvd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpeASsPxHkU8cH4gXvmt7bXqYfg3f18wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568375643064-0v4sftbk5sji2272t2mtgvomfjm8lvd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568375643064:android:1dae85b8443dfc38459d4d",
+        "android_client_info": {
+          "package_name": "com.dcs.imedico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568375643064-0v4sftbk5sji2272t2mtgvomfjm8lvd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpeASsPxHkU8cH4gXvmt7bXqYfg3f18wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568375643064-0v4sftbk5sji2272t2mtgvomfjm8lvd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
