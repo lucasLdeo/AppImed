@@ -91,7 +91,7 @@ class SecondScreen extends StatelessWidget {
               onTap: () {
               },
             ),
-            SizedBox(height: 300),
+            SizedBox(height: 0),
             ListTile(
               title: Text('Sair'),
               onTap: () {
