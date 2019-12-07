@@ -240,9 +240,6 @@ class _CadastroState extends State<Cadastro> {
                               : null,
                       onSaved: (value) => senha = value.trim(),
                     ),
-                    validator: (value) => value.isEmpty ? 'Senha can\'t be empty' : identical(value,senha) ? 'Senhas não conferem, tente novamente':null,
-                    onSaved: (value) => senha = value.trim(),
-                  ),
                   SizedBox(height: 15),
                     Container(
                       height: 20,
@@ -270,7 +267,8 @@ class _CadastroState extends State<Cadastro> {
               ),
           ),
         ),
-
+      ),
     );
-  }
+    }
 }
+
