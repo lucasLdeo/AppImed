@@ -44,9 +44,11 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
     setState(() {
       _errorMessage = "";
     });
+    print('opa blz');
     if (validateAndSave()) {
+      print ('blz demais');
       try {
-          await db.collection("Medico").document().setData({
+          await db.collection("Pacientes").document().setData({
             'name': nome,
             'cpf': cpf,
             'telefone': telefone,
@@ -56,7 +58,6 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
             new SecondScreen(
               userId: userId,
               auth: widget.auth,
-
             );
           }).catchError((e) {
             print(e);
@@ -71,29 +72,6 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
     }
   }
 
-  Future < void > addPaciente() async {
-    if(userId != null) {
-      await db.collection("Pacientes").document().setData({
-        'name': "texto",
-        'cpf': "1234567890",
-        'telefone': "1234565432",
-        'email': "teste@jesus.com",
-      }).then((documentReference) {
-        print("kkkkkkkkkkkkkk");
-        new SecondScreen(
-          userId: userId,
-          auth: widget.auth,
-
-        );
-      }).catchError((e) {
-        print(e);
-        _formKey.currentState.reset();
-      });
-    }else{
-
-    }
-
-  }
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
@@ -124,11 +102,9 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
                           borderSide: new BorderSide(color: Colors.teal)
 
                       ),
-
                       prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
                       labelText: 'Nome completo:',
                       hintText: 'Digite o seu nome',
-
                     ),
                     validator: (value) => value.isEmpty ? 'Nome can\'t be empty' : null,
                     onSaved: (value) => nome = value.trim(),

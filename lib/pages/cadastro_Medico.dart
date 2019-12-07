@@ -38,11 +38,11 @@ class _CadastroState extends State<Cadastro> {
   }
 
   bool validateAndSave() {
-    print('tentar validar');
+
     final form = _formKey.currentState;
-    print ('hahahahaha');
+
     if (form.validate()) {
-      print('deu');
+
       form.save();
       return true;
     }
@@ -52,14 +52,11 @@ class _CadastroState extends State<Cadastro> {
    setState(() {
      _errorMessage = "";
    });
-    print('entrei');
     setState(() {
       _errorMessage = "";
     });
     _isLoading = false;
-    print('essa ssenha aqui $senha');
     if (validateAndSave()) {
-      print('validei');
       _isLoading = true;
       String userId = "";
       try {
@@ -99,8 +96,6 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   Widget build(BuildContext context) {
-
-
   TextEditingController controller = TextEditingController();
     return MaterialApp(
       home: DefaultTabController(
@@ -222,30 +217,30 @@ class _CadastroState extends State<Cadastro> {
                     onSaved: (value) => senha = value.trim(),
                   ),
                   SizedBox(height: 15),
-                  Container(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: FlatButton(
-                      onPressed: () {
-                        _showCircularProgress();
-                        validateAndSubmit();
-                      },
-                      child: Text('Cadastrar'.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
+                    Container(
+                      height: 20,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      child: FlatButton(
+                        onPressed: () {
+                          _showCircularProgress();
+                          validateAndSubmit();
+                        },
+                        child: Text('Cadastrar'.toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                      ),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF9DEBFF), Color(0xFF91AFFF)],
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF9DEBFF), Color(0xFF91AFFF)],
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ),
         ),
       )
