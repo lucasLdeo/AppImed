@@ -188,7 +188,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) => value.isEmpty
             ? 'Campo do email não pode estar vazio'
-                ''
+            ''
             : null,
         onSaved: (value) => _email = value.trim(),
       ),
@@ -210,7 +210,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) => value.isEmpty
             ? 'Campo da senha não pode'
-                ' estar vazio'
+            ' estar vazio'
             : null,
         onSaved: (value) => _password = value.trim(),
       ),

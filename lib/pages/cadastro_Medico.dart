@@ -42,25 +42,29 @@ class _CadastroState extends State<Cadastro> {
   }
 
   bool validateAndSave() {
-
+    print('tentar validar');
     final form = _formKey.currentState;
-
+    print('hahahahaha');
     if (form.validate()) {
-
+      print('deu');
       form.save();
       return true;
     }
     return false;
   }
- Future <void> validateAndSubmit() async {
-   setState(() {
-     _errorMessage = "";
-   });
+
+  Future<void> validateAndSubmit() async {
+    setState(() {
+      _errorMessage = "";
+    });
+    print('entrei');
     setState(() {
       _errorMessage = "";
     });
     _isLoading = false;
+    print('essa ssenha aqui $senha');
     if (validateAndSave()) {
+      print('validei');
       _isLoading = true;
       String userId = "";
       try {
@@ -99,151 +103,154 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   Widget build(BuildContext context) {
-  TextEditingController controller = TextEditingController();
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
+    TextEditingController controller = TextEditingController();
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
+      body: Container(
         child: Form(
           key: _formKey,
           child: Align(
             child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                
-                child: ListView(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  children: <Widget>[
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
 
-                    SizedBox(height: 15),
-                    new TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'Nome completo:',
-                        hintText: 'Digite o seu nome',
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Nome can\'t be empty' : null,
-                      onSaved: (value) => nome = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.info,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'CPF:',
-                        hintText: 'XXX.XXX.XXX-XX',
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) => value.isEmpty
-                          ? 'CPF can\'t be empty'
-                          : value.length != 11
-                              ? 'CPF inesperado, deve ter 11 digitos'
-                              : null,
-                      onSaved: (value) => cpf = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.info,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'CRM:',
-                        hintText: 'XXXXXXXX',
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'CRM can\'t be empty' : null,
-                      onSaved: (value) => crm = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.call,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'Celular:',
-                        hintText: '(DDD) X XXXX-XXXX',
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) =>
-                          value.isEmpty ? 'Telefone can\'t be empty' : null,
-                      onSaved: (value) => telefone = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.email,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'Email: ',
-                        hintText: 'digite o seu email ',
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Email can\'t be empty' : null,
-                      onSaved: (value) => email = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.vpn_key,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'Senha:',
-                        hintText: 'escolha uma senha',
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Senha can\'t be empty' : null,
-                      onSaved: (value) => senha = value.trim(),
-                    ),
-                    SizedBox(height: 10),
-                    new TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: new BorderSide(color: Colors.teal)),
-                        prefixIcon: const Icon(
-                          Icons.vpn_key,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        labelText: 'Senha novamente:',
-                        hintText: 'digite sua senha novamente',
-                      ),
-                      validator: (value) => value.isEmpty
-                          ? 'Senha can\'t be empty'
-                          : identical(value, senha)
-                              ? 'Senhas não conferem, tente novamente'
-                              : null,
-                      onSaved: (value) => senha = value.trim(),
-                    ),
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                children: <Widget>[
+
                   SizedBox(height: 15),
-                    Container(
-                      height: 20,
-                      width: MediaQuery.of(context).size.width / 1.2,
+                  new TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'Nome completo:',
+                      hintText: 'Digite o seu nome',
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Nome can\'t be empty' : null,
+                    onSaved: (value) => nome = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.info,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'CPF:',
+                      hintText: 'XXX.XXX.XXX-XX',
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) => value.isEmpty
+                        ? 'CPF can\'t be empty'
+                        : value.length != 11
+                        ? 'CPF inesperado, deve ter 11 digitos'
+                        : null,
+                    onSaved: (value) => cpf = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.info,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'CRM:',
+                      hintText: 'XXXXXXXX',
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'CRM can\'t be empty' : null,
+                    onSaved: (value) => crm = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.call,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'Celular:',
+                      hintText: '(DDD) X XXXX-XXXX',
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) =>
+                    value.isEmpty ? 'Telefone can\'t be empty' : null,
+                    onSaved: (value) => telefone = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'Email: ',
+                      hintText: 'digite o seu email ',
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Email can\'t be empty' : null,
+                    onSaved: (value) => email = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.vpn_key,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'Senha:',
+                      hintText: 'escolha uma senha',
+                    ),
+                    validator: (value) =>
+                    value.isEmpty ? 'Senha can\'t be empty' : null,
+                    onSaved: (value) => senha = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  new TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.teal)),
+                      prefixIcon: const Icon(
+                        Icons.vpn_key,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      labelText: 'Senha novamente:',
+                      hintText: 'digite sua senha novamente',
+                    ),
+                    validator: (value) => value.isEmpty
+                        ? 'Senha can\'t be empty'
+                        : identical(value, senha)
+                        ? 'Senhas não conferem, tente novamente'
+                        : null,
+                    onSaved: (value) => senha = value.trim(),
+                  ),
+                  SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(5,0,5,0),
+
                       child: FlatButton(
                         onPressed: () {
                           _showCircularProgress();
@@ -262,13 +269,15 @@ class _CadastroState extends State<Cadastro> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
-                  ],
-                ),
+                  ),
+
+                ],
               ),
+            ),
           ),
         ),
       ),
-    );
-    }
-}
 
+    );
+  }
+}
