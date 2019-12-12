@@ -4,6 +4,7 @@ class Prontuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ProntuarioScreen(),
     );
   }
@@ -17,14 +18,6 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text ('Prontuario'),
-        centerTitle: true,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
       body: new Center(
         child: Container(
           child: ListView(

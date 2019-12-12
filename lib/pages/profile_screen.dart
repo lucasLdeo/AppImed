@@ -27,7 +27,18 @@ class SecondScreen extends StatelessWidget {
   final String userId;
   final db = Firestore.instance;
 
+  Future<String> inputData() async {
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final String uid = user.uid.toString();
+    return uid;
+  }
 
+  @override
+  void initState() {
+    final db = Firestore.instance;
+
+
+  }
 
   signOut() async {
 
@@ -69,6 +80,7 @@ class SecondScreen extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
             new UserAccountsDrawerHeader(
+
               accountName: new Text('Frederico Silva', style: TextStyle(
                 fontSize: 20.0,
               ),),
