@@ -20,6 +20,7 @@ class Cadastro extends StatefulWidget {
 class _CadastroState extends State<Cadastro> {
   final _formKey = new GlobalKey<FormState>();
   final db = Firestore.instance;
+  QuerySnapshot cpfExistentes;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String userId = "";
   String nome,
@@ -42,54 +43,65 @@ class _CadastroState extends State<Cadastro> {
   }
 
   bool validateAndSave() {
-    print('tentar validar');
     final form = _formKey.currentState;
-    print('hahahahaha');
     if (form.validate()) {
-      print('deu');
       form.save();
       return true;
     }
     return false;
   }
+  Future<bool> validateUser() async {
+    var usuario;
 
+    usuario = db.collection("Medicos").where("cpf" , isEqualTo: cpf);
+    usuario = db.collection("Pacientes").where("cpf" , isEqualTo: cpf);
+    if (usuario == null){
+      return true;
+    }
+    _errorMessage = 'Usuario ja cadastrado com esse cpf';
+    return false;
+  }
   Future<void> validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
     });
-    print('entrei');
+
     setState(() {
       _errorMessage = "";
     });
     _isLoading = false;
-    print('essa ssenha aqui $senha');
+
     if (validateAndSave()) {
-      print('validei');
+
       _isLoading = true;
       String userId = "";
       try {
-        AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
-            email: email, password: senha);
-        FirebaseUser user = result.user;
-        userId = user.uid;
-        print('Signed up user: $userId');
-        if (userId != null) {
-          await db.collection("Medico").document().setData({
-            'name': nome,
-            'cpf': cpf,
-            'crm': crm,
-            'telefone': telefone,
-            'email': email,
-          }).then((documentReference) {
-            new SecondScreen(
-              userId: userId,
-              auth: widget.auth,
-            );
-          }).catchError((e) {
-            print(e);
-          });
-        } else {
-          _isLoading = false;
+
+        if (await validateUser()) {
+          AuthResult result = await _firebaseAuth
+              .createUserWithEmailAndPassword(
+              email: email, password: senha);
+          FirebaseUser user = result.user;
+          userId = user.uid;
+
+          if (userId != null) {
+            await db.collection("Medico").document().setData({
+              'name': nome,
+              'cpf': cpf,
+              'crm': crm,
+              'telefone': telefone,
+              'email': email,
+            }).then((documentReference) {
+              new SecondScreen(
+                userId: userId,
+                auth: widget.auth,
+              );
+            }).catchError((e) {
+              print(e);
+            });
+          } else {
+            _isLoading = false;
+          }
         }
       } catch (e) {
         print('Error: $e');

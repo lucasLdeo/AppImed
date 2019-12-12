@@ -7,7 +7,7 @@ class LoginSignupPage extends StatefulWidget {
 
   final BaseAuth auth;
   final VoidCallback loginCallback;
-
+  String email;
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
 }
@@ -42,15 +42,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (_isLoginForm) {
           _isLoading = true;
           userId = await widget.auth.signIn(_email, _password);
-          print('Signed in: $userId');
-        } else {
-          userId = await widget.auth.signUp(_email, _password);
-          print('Signed up user: $userId');
         }
         setState(() {
           _isLoading = false;
         });
-
         if (userId.length > 0 && userId != null && _isLoginForm) {
           widget.loginCallback();
         }
@@ -123,7 +118,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                   children: <Widget>[
                     showLogo(),
                     Container(
-
                       padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                       child: Column(
                         children: <Widget>[
@@ -147,7 +141,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                       ),
                     ),
                     showErrorMessage(),
-                    SizedBox(height: 90,)
+                    SizedBox(
+                      height: 90,
+                    )
                   ],
                 ),
               )
@@ -158,14 +154,23 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
-      return new Text(
-        _errorMessage,
-        style: TextStyle(
+      return new AlertDialog(
+
+        title: Text("Erro: "),
+        content: Text(_errorMessage, style: TextStyle(
             fontSize: 13.0,
             color: Colors.red,
             height: 1.0,
-            fontWeight: FontWeight.w300),
+            fontWeight: FontWeight.w300),),
+        actions: [
+          FlatButton(
+            child: new Text("ok"),
+          )
+        ],
+        elevation: 24.0,
+        backgroundColor: Colors.blueGrey,
       );
+
     } else {
       return new Container(
         height: 0.0,
@@ -188,7 +193,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) => value.isEmpty
             ? 'Campo do email não pode estar vazio'
-            ''
+                ''
             : null,
         onSaved: (value) => _email = value.trim(),
       ),
@@ -210,7 +215,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) => value.isEmpty
             ? 'Campo da senha não pode'
-            ' estar vazio'
+                ' estar vazio'
             : null,
         onSaved: (value) => _password = value.trim(),
       ),

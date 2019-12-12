@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:imed/services/authentication.dart';
-import 'package:flutter/services.dart';
+
 import 'pacientes.dart';
 import 'tabelacid.dart';
 
@@ -15,14 +18,19 @@ var profileImage = NetworkImage(
     'oh=73476aece74ec810cb3f102755779f5b&oe=5E438998');
 
 class SecondScreen extends StatelessWidget {
-  SecondScreen({Key key, this.auth, this.userId, this.logoutCallback})
+  SecondScreen({Key key, this.auth, this.userId, this.logoutCallback, this.usuario })
       : super(key: key);
 
   final BaseAuth auth;
+  final Future<String> usuario;
   final VoidCallback logoutCallback;
   final String userId;
+  final db = Firestore.instance;
+
+
 
   signOut() async {
+
     try {
       await auth.signOut();
       logoutCallback();
@@ -31,7 +39,6 @@ class SecondScreen extends StatelessWidget {
     }
   }
   @override
-
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -78,6 +85,7 @@ class SecondScreen extends StatelessWidget {
             ),
             ListTile(
               title: Text('CID'),
+
               onTap: () {
                 Navigator.push(
                     context,

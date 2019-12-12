@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imed/services/authentication.dart';
-import 'package:imed/Lixo/root_page.dart';
+import 'package:imed/pages/root_page.dart';
 import 'package:flutter/services.dart';
 void main() {
   runApp(new MyApp());

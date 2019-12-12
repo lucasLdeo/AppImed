@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:imed/main.dart';
-import 'package:imed/Lixo/root_page.dart';
+import 'package:imed/pages/root_page.dart';
 
 void main() => runApp(MaterialApp(title: "Cadastro", home: CadastroPaciente()));
 
@@ -35,7 +35,16 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
     }
     return false;
   }
+  Future<bool> validateUser() async {
+    var usuario;
 
+    usuario = db.collection("Pacientes").where("cpf" , isEqualTo: cpf);
+    if (usuario == null){
+      return true;
+    }
+    _errorMessage = 'Usuario ja cadastrado com esse cpf';
+    return false;
+  }
 
   Future <void> validateAndSubmit() async {
     setState(() {
@@ -44,10 +53,11 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
     setState(() {
       _errorMessage = "";
     });
-    print('opa blz');
+
     if (validateAndSave()) {
-      print ('blz demais');
+
       try {
+        if (await validateUser()) {
           await db.collection("Pacientes").document().setData({
             'name': nome,
             'cpf': cpf,
@@ -62,6 +72,7 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
           }).catchError((e) {
             print(e);
           });
+        }
       } catch (e) {
         print('Error: $e');
         setState(() {
