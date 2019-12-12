@@ -63,15 +63,20 @@ class SecondScreen extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Cabeçalho ~~ foto'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
+        child: Container(
+          color: Colors.grey,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text('Frederico Silva', style: TextStyle(
+                fontSize: 20.0,
+              ),),
+              accountEmail: new Text('CMD'),
+              currentAccountPicture: new CircleAvatar(
+                backgroundImage: new NetworkImage('https://musicimage.xboxlive.com/catalog/video.movie.8D6KGX0M8V16/image?locale=pt-br&mode=crop&purposes=BoxArt&q=90&h=225&w=150&format=jpg'),
+              ),),
+
 
             ListTile(
               title: Text('Pacientes'),
@@ -99,6 +104,11 @@ class SecondScreen extends StatelessWidget {
               onTap: () {
               },
             ),
+            new Divider(
+              color: Colors.blueGrey,
+              height: 5.0,
+            ),
+
             SizedBox(height: 0),
             ListTile(
               title: Text('Sair'),
@@ -108,7 +118,7 @@ class SecondScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ),),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:imed/pages/perfilpaciente.dart';
 import 'package:imed/pages/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:imed/pages/cadastro_paciente.dart';
 class Pacientes extends StatefulWidget {
   @override
   _PacientesState createState() => _PacientesState();
@@ -83,10 +83,10 @@ class _PacientesState extends State<Pacientes> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-              return new SecondScreen();
-            }));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CadastroPaciente(),)
+            );
           },
           tooltip: 'Increment Counter',
           child: Icon(Icons.add),
