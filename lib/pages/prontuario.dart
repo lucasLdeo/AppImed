@@ -27,9 +27,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
       ),
       body: new Center(
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: <Widget>[
               SizedBox(height: 20),
               Padding(
