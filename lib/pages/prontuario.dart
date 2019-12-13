@@ -27,35 +27,49 @@ class ProntuarioScreen extends StatefulWidget {
 class _ProntuarioScreenState extends State<ProntuarioScreen> {
   _ProntuarioScreenState(this.documento);
 
+  final _formKey = new GlobalKey<FormState>();
   final String documento;
   String doenca, medicacao,suplementacao, alergia, problema, observacao;
 
+
+  bool validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
   Future<void> saveProntuario() async {
-    print(doenca);
-    print(alergia);
+
     final db = Firestore.instance;
-    print(documento);
-    await db
-        .collection('Pacientes')
-        .document(documento)
-        .collection('Prontuario')
-        .document()
-        .setData({
+    if (validateAndSave()) {
+      print(doenca);
+      print(alergia);
+      print(documento);
+      await db.collection("Pacientes").document(documento).collection(
+          "Prontuario").document().setData({
         'doenca': doenca,
-        'medicacao':medicacao,
+        'medicacao': medicacao,
         'suplementacao': suplementacao,
         'alergia': alergia,
         'problema': problema,
-        'observacao':observacao,
-        }).then((documentReference) {
+        'observacao': observacao,
+      }).then((documentReference) {
         Navigator.of(context).pop();
-    });
+      });
+    }else{
+      print ('ta errado');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: new Center(
+          child: new Form(
+          key: _formKey,
       child: Container(
         child: ListView(
           padding: EdgeInsets.all(10.0),
@@ -66,8 +80,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
                 labelText: 'Sofre de alguma doença?',
                 hintText: 'Ex.: bronquite ou nenhuma...',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'este campo não pode ser nulo' : null,
+              validator: (value) => value.isEmpty ? 'este campo não pode ser nulo' : null,
               onSaved: (value) => doenca = value.trim(),
             ),
             SizedBox(height: 10),
@@ -77,8 +90,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
                 labelText: 'Fazendo uso de alguma medicação?',
                 hintText: 'Ex.: antibióticos... ',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'este campo não pode ser nulo' : null,
+              validator: (value) => value.isEmpty ? 'este campo não pode ser nulo' : null,
               onSaved: (value) => medicacao = value.trim(),
             ),
             SizedBox(height: 10),
@@ -102,8 +114,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
                 labelText: 'Teve alguma alergia?',
                 hintText: 'Ex.: Rinite',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'este campo não pode ser nulo' : null,
+              validator: (value) => value.isEmpty ? 'este campo não pode ser nulo' : null,
               onSaved: (value) => alergia = value.trim(),
             ),
             SizedBox(height: 10),
@@ -115,8 +126,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
                 labelText: 'Teve algum problema recentemente?',
                 hintText: 'Ex.: problemas com alergia, hemorragia...',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'este campo não pode ser nulo' : null,
+              validator: (value) => value.isEmpty ? 'este campo não pode ser nulo' : null,
               onSaved: (value) => problema = value.trim(),
             ),
             SizedBox(height: 10),
@@ -128,8 +138,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
                 labelText: 'Alguma outra observação?',
                 hintText: 'Ex.: qualquer anotação.',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'este campo não pode ser nulo' : null,
+              validator: (value) => value.isEmpty ? 'este campo não pode ser nulo' : null,
               onSaved: (value) => observacao = value.trim(),
             ),
             Padding(
@@ -144,6 +153,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
           ],
         ),
       ),
+          ),
     ));
   }
 }
