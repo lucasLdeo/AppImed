@@ -8,10 +8,10 @@ class PerfilPaciente extends StatelessWidget {
   PerfilPaciente(this.idDocumento);
 
   final String idDocumento;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(
@@ -23,14 +23,17 @@ class PerfilPaciente extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage (this.iddocumento);
+  MyHomePage(this.iddocumento);
+
   final String iddocumento;
+
   @override
   _MyHomePageState createState() => new _MyHomePageState(iddocumento);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState(this.idDocumento);
+
   final String idDocumento;
   QuerySnapshot prontuarioPaciente;
   var profileImage = NetworkImage(
@@ -53,90 +56,88 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: new Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                child: Column(
+      body: new ListView(
+        children: <Widget>[
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: CircleAvatar(
+                            backgroundImage: profileImage,
+                            maxRadius: 55.0,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 12.0),
+                          child: Text(
+                            "Exemplo da Silva",
+                            style:
+                                TextStyle(fontSize: 30.0, color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: CircleAvatar(
-                        backgroundImage: profileImage,
-                        maxRadius: 55.0,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 12.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 64.0, vertical: 16.0),
                       child: Text(
-                        "Exemplo da Silva",
-                        style: TextStyle(fontSize: 30.0, color: Colors.black),
+                        "Ultima Consulta : JUL 21, 2018",
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 64.0, vertical: 16.0),
-                  child: Text(
-                    "Ultima Consulta : JUL 21, 2018",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                new Divider(
+                  color: Colors.blueGrey,
+                  height: 5.0,
                 ),
-              ],
-            ),
-            new Divider(
-              color: Colors.blueGrey,
-              height: 5.0,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 64.0, vertical: 16.0),
-                  child: Text(
-                    "Prontuarios",
-                    style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),
-                  ),
-                ),
-              ],
-            ),
-           Column(
 
-               ListView.builder(
-                itemCount: prontuarioPaciente.documents.length,
-                padding: EdgeInsets.all(5.0),
-                itemBuilder: (context, i) {
-                  return new ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('images/avatar.png'),
-                    ),
-                    title: Text(prontuarioPaciente.documents[i].data['name']),
-                    subtitle: Text(prontuarioPaciente.documents[i].data['cpf']),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PerfilPaciente(prontuarioPaciente.documents[i].documentID),
-                          ));
-                    },
-                  );
-                })
-              ),
-            ]
-        ),
+              ]),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 64.0, vertical: 16.0),
+            child: Text(
+              "Prontuarios",
+              style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),
+            ),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+              physics: ScrollPhysics(),
+              itemCount: prontuarioPaciente.documents.length,
+              padding: EdgeInsets.all(5.0),
+              itemBuilder: (context, i) {
+                return new ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('images/avatar.png'),
+                  ),
+                  title: Text(prontuarioPaciente.documents[i].data['alergia']),
+                  subtitle: Text(prontuarioPaciente.documents[i].data['doenca']),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PerfilPaciente(prontuarioPaciente.documents[i].documentID),
+                        ));
+                  },
+                );
+              })],
+
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -148,20 +149,26 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Prontuario(this.idDocumento),)
-          );
+              MaterialPageRoute(
+                builder: (context) => Prontuario(this.idDocumento),
+              ));
         },
         tooltip: 'Increment Counter',
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-
   }
+
   @override
-  void initState(){
+  void initState() {
     final db = Firestore.instance;
-    db.collection("Pacientes").document(idDocumento).collection("Prontuario").getDocuments().then((results){
+    db
+        .collection("Pacientes")
+        .document(idDocumento)
+        .collection("Prontuario")
+        .getDocuments()
+        .then((results) {
       if (results != null) {
         setState(() {
           prontuarioPaciente = results;
