@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:imed/pages/profile_screen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,8 +51,8 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
       return false;
     }
   }
+
   Future <void> validateAndSubmit() async {
-    print('opa blz');
     setState(() {
       _errorMessage = "";
     });
@@ -67,15 +67,12 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
             'cpf': cpf,
             'telefone': telefone,
             'email': email,
-
           }).then((documentReference) {
-            new SecondScreen(
-              userId: userId,
-              auth: widget.auth,
-            );
+            Navigator.of(context).pop();
           }).catchError((e) {
             print(e);
           });
+
         }
       } catch (e) {
         print('Error: $e');
