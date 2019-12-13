@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:imed/services/authentication.dart';
-
 import 'pacientes.dart';
 import 'tabelacid.dart';
-
 
 var color1 = Color(0xFF9DEBFF);
 var color2 = Color(0xFF91AFFF);
@@ -18,30 +14,22 @@ var profileImage = NetworkImage(
     'oh=73476aece74ec810cb3f102755779f5b&oe=5E438998');
 
 class SecondScreen extends StatelessWidget {
-  SecondScreen({Key key, this.auth, this.userId, this.logoutCallback, this.usuario })
-      : super(key: key);
+  SecondScreen({
+    Key key,
+    this.auth,
+    this.userId,
+    this.logoutCallback,
+    this.email,
+  }) : super(key: key);
 
   final BaseAuth auth;
-  final Future<String> usuario;
   final VoidCallback logoutCallback;
   final String userId;
+  final String email;
+  QuerySnapshot UsuarioAtual = null;
   final db = Firestore.instance;
 
-  Future<String> inputData() async {
-    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    final String uid = user.uid.toString();
-    return uid;
-  }
-
-  @override
-  void initState() {
-    final db = Firestore.instance;
-
-
-  }
-
   signOut() async {
-
     try {
       await auth.signOut();
       logoutCallback();
@@ -49,13 +37,11 @@ class SecondScreen extends StatelessWidget {
       print(e);
     }
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       appBar: AppBar(
-
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white12,
@@ -79,58 +65,52 @@ class SecondScreen extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-            new UserAccountsDrawerHeader(
-
-              accountName: new Text('Frederico Silva', style: TextStyle(
-                fontSize: 20.0,
-              ),),
-              accountEmail: new Text('CMD'),
-              currentAccountPicture: new CircleAvatar(
-                backgroundImage: new NetworkImage('https://musicimage.xboxlive.com/catalog/video.movie.8D6KGX0M8V16/image?locale=pt-br&mode=crop&purposes=BoxArt&q=90&h=225&w=150&format=jpg'),
-              ),),
-
-
-            ListTile(
-              title: Text('Pacientes'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Pacientes()
-                    ));
-              },
-            ),
-            ListTile(
-              title: Text('CID'),
-
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CID()
-                    ));
-              },
-            ),
-            ListTile(
-              title: Text('Configurações'),
-              onTap: () {
-              },
-            ),
-            new Divider(
-              color: Colors.blueGrey,
-              height: 5.0,
-            ),
-
-            SizedBox(height: 0),
-            ListTile(
-              title: Text('Sair'),
-              onTap: () {
-                signOut();
-              },
-            ),
-          ],
+              new UserAccountsDrawerHeader(
+                accountName: new Text(
+                  'Frederico',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                accountEmail: new Text('CMD'),
+                currentAccountPicture: new CircleAvatar(
+                  backgroundImage: new NetworkImage(
+                      'https://musicimage.xboxlive.com/catalog/video.movie.8D6KGX0M8V16/image?locale=pt-br&mode=crop&purposes=BoxArt&q=90&h=225&w=150&format=jpg'),
+                ),
+              ),
+              ListTile(
+                title: Text('Pacientes'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Pacientes()));
+                },
+              ),
+              ListTile(
+                title: Text('CID'),
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => CID()));
+                },
+              ),
+              ListTile(
+                title: Text('Configurações'),
+                onTap: () {},
+              ),
+              new Divider(
+                color: Colors.blueGrey,
+                height: 5.0,
+              ),
+              SizedBox(height: 0),
+              ListTile(
+                title: Text('Sair'),
+                onTap: () {
+                  signOut();
+                },
+              ),
+            ],
+          ),
         ),
-      ),),
+      ),
     );
   }
 }
@@ -159,8 +139,7 @@ class Gaveta extends StatelessWidget {
             ),
             ListTile(
               title: Text('Sair'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
           ],
         ),
@@ -306,11 +285,8 @@ class ItemCard extends StatelessWidget {
 }
 
 class UpperSection extends StatelessWidget {
-  const UpperSection({
-    Key key,
-  }) : super(key: key);
+  UpperSection( {Key key}) : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
@@ -332,7 +308,7 @@ class UpperSection extends StatelessWidget {
                 height: 16.0,
               ),
               Text(
-                'Frederico Silva',
+                'Frederico',
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
