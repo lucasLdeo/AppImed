@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:imed/pages/login_signup_page.dart';
 import 'package:imed/pages/profile_screen.dart';
@@ -11,10 +11,9 @@ enum AuthStatus {
 }
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth, this.Usuario});
+  RootPage({this.auth});
 
   final BaseAuth auth;
-  final FirebaseUser Usuario;
 
   @override
   State<StatefulWidget> createState() => new _RootPageState();
@@ -23,24 +22,26 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
+  String email = "";
+  String nome = "";
 
   @override
   void initState() {
     super.initState();
+
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
           _userId = user?.uid;
-
+          email = user?.email;
         }
         authStatus =
-            user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+        user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
       });
     });
   }
 
   void loginCallback() {
-
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         _userId = user.uid.toString();
@@ -76,7 +77,6 @@ class _RootPageState extends State<RootPage> {
       case AuthStatus.NOT_LOGGED_IN:
         return new LoginSignupPage(
           auth: widget.auth,
-
           loginCallback: loginCallback,
         );
         break;
@@ -85,7 +85,7 @@ class _RootPageState extends State<RootPage> {
           return new SecondScreen(
             userId: _userId,
             auth: widget.auth,
-            usuario: widget.auth.EmailValidation(),
+            email: email,
             logoutCallback: logoutCallback,
           );
         } else

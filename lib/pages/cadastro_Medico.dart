@@ -50,18 +50,31 @@ class _CadastroState extends State<Cadastro> {
     }
     return false;
   }
-  Future<bool> validateUser() async {
-    var usuario;
 
-    usuario = db.collection("Medicos").where("cpf" , isEqualTo: cpf);
-    usuario = db.collection("Pacientes").where("cpf" , isEqualTo: cpf);
-    if (usuario == null){
+  Future<bool> validateUser() async {
+    bool usuario;
+
+    print(cpf);
+    db.collection("Medico").where("cpf", isEqualTo: cpf).getDocuments().then((results){
+      if (results == null) {
+        usuario = true;
+      } else {
+        usuario = false;
+      }
+    });
+
+    print(usuario);
+
+    if (usuario == null) {
+
       return true;
+    } else {
+      return false;
     }
-    _errorMessage = 'Usuario ja cadastrado com esse cpf';
-    return false;
   }
+
   Future<void> validateAndSubmit() async {
+
     setState(() {
       _errorMessage = "";
     });
@@ -75,12 +88,12 @@ class _CadastroState extends State<Cadastro> {
 
       _isLoading = true;
       String userId = "";
-      try {
 
+      try {
         if (await validateUser()) {
+
           AuthResult result = await _firebaseAuth
-              .createUserWithEmailAndPassword(
-              email: email, password: senha);
+              .createUserWithEmailAndPassword(email: email, password: senha);
           FirebaseUser user = result.user;
           userId = user.uid;
 
@@ -92,9 +105,11 @@ class _CadastroState extends State<Cadastro> {
               'telefone': telefone,
               'email': email,
             }).then((documentReference) {
+
               new SecondScreen(
                 userId: userId,
                 auth: widget.auth,
+                email: email,
               );
             }).catchError((e) {
               print(e);
@@ -128,11 +143,9 @@ class _CadastroState extends State<Cadastro> {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-
               child: ListView(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 children: <Widget>[
-
                   SizedBox(height: 15),
                   new TextFormField(
                     decoration: InputDecoration(
@@ -146,7 +159,7 @@ class _CadastroState extends State<Cadastro> {
                       hintText: 'Digite o seu nome',
                     ),
                     validator: (value) =>
-                    value.isEmpty ? 'Nome can\'t be empty' : null,
+                        value.isEmpty ? 'Nome can\'t be empty' : null,
                     onSaved: (value) => nome = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -165,8 +178,8 @@ class _CadastroState extends State<Cadastro> {
                     validator: (value) => value.isEmpty
                         ? 'CPF can\'t be empty'
                         : value.length != 11
-                        ? 'CPF inesperado, deve ter 11 digitos'
-                        : null,
+                            ? 'CPF inesperado, deve ter 11 digitos'
+                            : null,
                     onSaved: (value) => cpf = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -182,7 +195,7 @@ class _CadastroState extends State<Cadastro> {
                       hintText: 'XXXXXXXX',
                     ),
                     validator: (value) =>
-                    value.isEmpty ? 'CRM can\'t be empty' : null,
+                        value.isEmpty ? 'CRM can\'t be empty' : null,
                     onSaved: (value) => crm = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -199,7 +212,7 @@ class _CadastroState extends State<Cadastro> {
                     ),
                     keyboardType: TextInputType.number,
                     validator: (value) =>
-                    value.isEmpty ? 'Telefone can\'t be empty' : null,
+                        value.isEmpty ? 'Telefone can\'t be empty' : null,
                     onSaved: (value) => telefone = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -217,7 +230,7 @@ class _CadastroState extends State<Cadastro> {
                       hintText: 'digite o seu email ',
                     ),
                     validator: (value) =>
-                    value.isEmpty ? 'Email can\'t be empty' : null,
+                        value.isEmpty ? 'Email can\'t be empty' : null,
                     onSaved: (value) => email = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -234,7 +247,7 @@ class _CadastroState extends State<Cadastro> {
                       hintText: 'escolha uma senha',
                     ),
                     validator: (value) =>
-                    value.isEmpty ? 'Senha can\'t be empty' : null,
+                        value.isEmpty ? 'Senha can\'t be empty' : null,
                     onSaved: (value) => senha = value.trim(),
                   ),
                   SizedBox(height: 10),
@@ -252,20 +265,18 @@ class _CadastroState extends State<Cadastro> {
                     ),
                     validator: (value) => value.isEmpty
                         ? 'Senha can\'t be empty'
-                        : identical(value, senha)
-                        ? 'Senhas não conferem, tente novamente'
-                        : null,
+                        : identical(senha, value)
+                            ? 'Senhas nao conferem, digite novamente'
+                            : null,
                     onSaved: (value) => senha = value.trim(),
                   ),
                   SizedBox(height: 10),
                   Align(
                     alignment: Alignment.center,
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(5,0,5,0),
-
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child: FlatButton(
                         onPressed: () {
-                          _showCircularProgress();
                           validateAndSubmit();
                         },
                         child: Text('Cadastrar'.toUpperCase(),
@@ -282,14 +293,12 @@ class _CadastroState extends State<Cadastro> {
                           borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ),
-
                 ],
               ),
             ),
           ),
         ),
       ),
-
     );
   }
 }

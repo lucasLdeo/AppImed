@@ -4,8 +4,7 @@ import 'package:imed/pages/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:imed/main.dart';
-import 'package:imed/pages/root_page.dart';
+
 
 void main() => runApp(MaterialApp(title: "Cadastro", home: CadastroPaciente()));
 
@@ -36,26 +35,31 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
     return false;
   }
   Future<bool> validateUser() async {
-    var usuario;
+    bool usuario;
 
-    usuario = db.collection("Pacientes").where("cpf" , isEqualTo: cpf);
-    if (usuario == null){
+    print(cpf);
+    db.collection("Pacientes").where("cpf", isEqualTo: cpf).getDocuments().then((results){
+      if (results == null) {
+        usuario = true;
+      } else {
+        usuario = false;
+      }
+    });
+    if (usuario == null) {
       return true;
+    } else {
+      return false;
     }
-    _errorMessage = 'Usuario ja cadastrado com esse cpf';
-    return false;
   }
-
   Future <void> validateAndSubmit() async {
+    print('opa blz');
     setState(() {
       _errorMessage = "";
     });
     setState(() {
       _errorMessage = "";
     });
-
     if (validateAndSave()) {
-
       try {
         if (await validateUser()) {
           await db.collection("Pacientes").document().setData({
@@ -87,6 +91,7 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 2,
         child:new Form(
@@ -160,17 +165,6 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
                     ),
                     validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
                     onSaved: (value) => email = value.trim(),
-                  ),
-                  SizedBox(height: 10),
-                  new TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.teal)
-                      ),
-                      prefixIcon: const Icon(Icons.email, color: Colors.lightBlueAccent,),
-                      labelText: 'Observacao: ',
-                      hintText: 'observacoes sobre o paciente ',
-                    ),
                   ),
                   SizedBox(height: 45),
                   Container(

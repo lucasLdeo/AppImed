@@ -105,9 +105,9 @@ class _PacientesState extends State<Pacientes> {
     final db = Firestore.instance;
     db.collection("Pacientes").getDocuments().then((results) {
       if (results != null) {
-        setState(() {
-          pacientes = results;
-        });
+      setState(() {
+      pacientes = results;
+      });
       } else {
         setState(() {
           _showCircularProgress();
