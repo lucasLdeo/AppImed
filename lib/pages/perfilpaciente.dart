@@ -104,18 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.blueGrey,
                   height: 5.0,
                 ),
-
               ]),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 64.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 64.0, vertical: 16.0),
             child: Text(
               "Prontuarios",
               style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),
             ),
           ),
           ListView.builder(
-            shrinkWrap: true,
+              shrinkWrap: true,
               physics: ScrollPhysics(),
               itemCount: prontuarioPaciente.documents.length,
               padding: EdgeInsets.all(5.0),
@@ -126,12 +125,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundImage: AssetImage('images/avatar.png'),
                   ),
                   title: Text(prontuarioPaciente.documents[i].data['alergia']),
-                  subtitle: Text(prontuarioPaciente.documents[i].data['doenca']),
+                  subtitle:
+                      Text(prontuarioPaciente.documents[i].data['doenca']),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    showAlertDialog3(
+                        context,
+                        prontuarioPaciente.documents[i].data['doenca'],
+                        prontuarioPaciente.documents[i].data['alergia'],
+                        prontuarioPaciente.documents[i].data['medicacao'],
+                        prontuarioPaciente.documents[i].data['observacao'],
+                        prontuarioPaciente.documents[i].data['problema'],
+                        prontuarioPaciente.documents[i].data['suplementacao']);
+                  },
                 );
-              })],
-
+              })
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -151,6 +160,40 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  showAlertDialog3(
+      BuildContext context,
+      String doenca,
+      String alergia,
+      String medicacao,
+      String observacao,
+      String problema,
+      String suplementacao) {
+    // configura o  AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Prontuário"),
+      content: Text('Deonça: ' +
+          doenca +
+          '\n\nAlergia: ' +
+          alergia +
+          '\n\nMedicação: ' +
+          medicacao +
+          '\n\nObservação: ' +
+          observacao +
+          '\n\nProblema: ' +
+          problema +
+          '\n\nSuplementação: ' +
+          suplementacao),
+      actions: [],
+    );
+    // exibe o dialogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
