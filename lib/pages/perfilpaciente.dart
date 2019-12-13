@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imed/pages/CardItemModel.dart';
 import 'package:imed/pages/prontuario.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PerfilPaciente extends StatelessWidget {
   PerfilPaciente(this.idDocumento);
@@ -31,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState(this.idDocumento);
   final String idDocumento;
-
+  QuerySnapshot prontuarioPaciente;
   var profileImage = NetworkImage(
       'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Bearded_Man-17-512.png');
   var appColors = [
@@ -104,13 +105,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 64.0, vertical: 16.0),
                   child: Text(
-                    "Prontuarios:",
+                    "Prontuarios",
                     style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),
                   ),
                 ),
               ],
-            )
-          ],
+            ),
+           Column(
+
+               ListView.builder(
+                itemCount: prontuarioPaciente.documents.length,
+                padding: EdgeInsets.all(5.0),
+                itemBuilder: (context, i) {
+                  return new ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('images/avatar.png'),
+                    ),
+                    title: Text(prontuarioPaciente.documents[i].data['name']),
+                    subtitle: Text(prontuarioPaciente.documents[i].data['cpf']),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PerfilPaciente(prontuarioPaciente.documents[i].documentID),
+                          ));
+                    },
+                  );
+                })
+              ),
+            ]
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -131,5 +156,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+
+  }
+  @override
+  void initState(){
+    final db = Firestore.instance;
+    db.collection("Pacientes").document(idDocumento).collection("Prontuario").getDocuments().then((results){
+      if (results != null) {
+        setState(() {
+          prontuarioPaciente = results;
+        });
+      }
+    });
+    super.initState();
   }
 }

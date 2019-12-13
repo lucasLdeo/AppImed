@@ -30,7 +30,7 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
   final _formKey = new GlobalKey<FormState>();
   final String documento;
   String doenca, medicacao,suplementacao, alergia, problema, observacao;
-
+  QuerySnapshot prontuario;
 
   bool validateAndSave() {
     final form = _formKey.currentState;
