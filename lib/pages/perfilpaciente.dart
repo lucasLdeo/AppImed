@@ -128,13 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(prontuarioPaciente.documents[i].data['alergia']),
                   subtitle: Text(prontuarioPaciente.documents[i].data['doenca']),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PerfilPaciente(prontuarioPaciente.documents[i].documentID),
-                        ));
-                  },
+                  onTap: () {},
                 );
               })],
 
