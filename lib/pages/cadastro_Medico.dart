@@ -23,13 +23,7 @@ class _CadastroState extends State<Cadastro> {
   QuerySnapshot cpfExistentes;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String userId = "";
-  String nome,
-      cpf,
-      crm,
-      telefone,
-      email,
-      senha,
-      _errorMessage,
+  String nome, cpf, crm, telefone,  email, senha,_errorMessage,
       msg = 'Fazer Cadastro';
   bool _isLoading = false;
 

@@ -70,7 +70,7 @@ class _PacientesState extends State<Pacientes> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PerfilPaciente(),
+                        builder: (context) => PerfilPaciente(pacientes.documents[i].documentID),
                       ));
                 },
               );

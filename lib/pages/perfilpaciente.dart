@@ -4,6 +4,9 @@ import 'package:imed/pages/CardItemModel.dart';
 import 'package:imed/pages/prontuario.dart';
 
 class PerfilPaciente extends StatelessWidget {
+  PerfilPaciente(this.idDocumento);
+
+  final String idDocumento;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,17 +16,22 @@ class PerfilPaciente extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(),
+      home: new MyHomePage(idDocumento),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  MyHomePage (this.iddocumento);
+  final String iddocumento;
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState(iddocumento);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  _MyHomePageState(this.idDocumento);
+  final String idDocumento;
+
   var profileImage = NetworkImage(
       'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Bearded_Man-17-512.png');
   var appColors = [
@@ -118,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Prontuario(),
+                                                        Prontuario(idDocumento),
                                                   ));
                                             },
                                           ),
