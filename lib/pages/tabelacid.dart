@@ -2,89 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:imed/models/todo.dart';
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:imed/pages/cadastro_paciente.dart';
+import 'package:imed/pages/perfilpaciente.dart';
 class CID extends StatefulWidget {
   @override
-  CIDState createState() {
-    return new CIDState();
-  }
+  _CIDState createState() => _CIDState();
 }
 
-class CIDState extends State<CID> {
-  Widget bodyData() => DataTable(
-      onSelectAll: (b) {},
-      sortColumnIndex: 1,
-      sortAscending: true,
-      columns: <DataColumn>[
-        DataColumn(
-          label: Text("Nome"),
-          numeric: false,
-          onSort: (i, b) {
-            print("$i $b");
-            setState(() {
-              names.sort((a, b) => a.Nome.compareTo(b.Nome));
-            });
-          },
-          tooltip: "To display first name of the Name",
-        ),
-        DataColumn(
-          label: Text("Last Name"),
-          numeric: false,
-          onSort: (i, b) {
-            print("$i $b");
-            setState(() {
-              names.sort((a, b) => a.Codigo.compareTo(b.Codigo));
-            });
-          },
-          tooltip: "To display last name of the Name",
-        ),
-      ],
-      rows: names
-          .map(
-            (name) => DataRow(
-          cells: [
-            DataCell(
-              Text(name.Nome),
-              showEditIcon: false,
-              placeholder: false,
-            ),
-            DataCell(
-              Text(name.Codigo),
-              showEditIcon: false,
-              placeholder: false,
-            )
-          ],
-        ),
-      )
-          .toList());
+class _CIDState extends State<CID> {
+  TextEditingController controller = new TextEditingController();
+  String filter;
+  Widget appBarTitle = new Text("Tabela CID");
+  Icon actionIcon = new Icon(Icons.search);
+  QuerySnapshot doencas;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("CID"),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
+    final title = 'CID';
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: appBarTitle,
+          actions: <Widget>[
+          ],
         ),
-      ),
-      body: Container(
-        child: bodyData(),
+        body: ListView.builder(
+            itemCount: doencas.documents.length,
+            padding: EdgeInsets.all(5.0),
+            itemBuilder: (context, i) {
+
+              return new ListTile(
+                title: Text(doencas.documents[i].data['Nome_Doenca']),
+                subtitle: Text(doencas.documents[i].data['Codigo_Doenca']),
+              );
+            }),
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          child: Container(
+            height: 50.0,
+          ),
+        ),
       ),
     );
   }
+  Widget _showCircularProgress() {
+    Center(child: CircularProgressIndicator());
+  }
+
+  @override
+  void initState() {
+    final db = Firestore.instance;
+    db.collection("CID").getDocuments().then((results) {
+      if (results != null) {
+        setState(() {
+          doencas = results;
+        });
+      } else {
+        setState(() {
+          _showCircularProgress();
+        });
+      }
+    });
+    controller.addListener(() {
+      setState(() {
+        filter = controller.text;
+      });
+    });
+    super.initState();
+  }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+
 }
-
-class Name {
-  String Nome;
-  String Codigo;
-
-  Name({this.Nome, this.Codigo});
-}
-
-var names = <Name>[
-  Name(Nome: "Gripe", Codigo: "1"),
-  Name(Nome: "Resfriado", Codigo: "2"),
-  Name(Nome: "Virose", Codigo: "3"),
-];
