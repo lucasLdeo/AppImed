@@ -99,7 +99,7 @@ class _CadastroState extends State<Cadastro> {
               'telefone': telefone,
               'email': email,
             }).then((documentReference) {
-
+              print('to doidao');
               new SecondScreen(
                 userId: userId,
                 auth: widget.auth,
@@ -128,7 +128,10 @@ class _CadastroState extends State<Cadastro> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
-      body: Container(
+
+      body: Stack(
+        children:<Widget> [
+        Container(
         child: Form(
           key: _formKey,
           child: Align(
@@ -293,6 +296,8 @@ class _CadastroState extends State<Cadastro> {
           ),
         ),
       ),
+          _showCircularProgress(),
+    ],)
     );
   }
 }

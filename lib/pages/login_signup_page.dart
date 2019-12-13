@@ -132,7 +132,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     ),
                     showSecondaryButton(),
                     Container(
-                      padding: EdgeInsets.fromLTRB(16, 0, 161, 0),
+                      padding: EdgeInsets.fromLTRB(84, 0, 84, 0),
                       child: Column(
                         children: <Widget>[
                           showFacebookButton(),

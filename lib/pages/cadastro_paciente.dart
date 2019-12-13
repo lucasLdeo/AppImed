@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:imed/pages/pacientes.dart';
 import 'package:imed/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -68,7 +69,7 @@ class _CadastroPacienteState extends State<CadastroPaciente> {
             'telefone': telefone,
             'email': email,
           }).then((documentReference) {
-            Navigator.of(context).pop();
+            new Pacientes();
           }).catchError((e) {
             print(e);
           });

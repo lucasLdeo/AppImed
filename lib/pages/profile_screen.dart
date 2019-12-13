@@ -26,7 +26,7 @@ class SecondScreen extends StatelessWidget {
   final VoidCallback logoutCallback;
   final String userId;
   final String email;
-  QuerySnapshot UsuarioAtual = null;
+  QuerySnapshot UsuarioAtual;
   final db = Firestore.instance;
 
   signOut() async {
@@ -285,7 +285,7 @@ class ItemCard extends StatelessWidget {
 }
 
 class UpperSection extends StatelessWidget {
-  UpperSection( {Key key}) : super(key: key);
+  UpperSection({Key key}) : super(key: key);
 
   Widget build(BuildContext context) {
     return Column(
