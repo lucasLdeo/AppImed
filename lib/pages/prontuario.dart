@@ -21,73 +21,69 @@ class _ProntuarioScreenState extends State<ProntuarioScreen> {
       body: new Center(
         child: Container(
           child: ListView(
+            padding: EdgeInsets.all(10.0),
             children: <Widget>[
-              SizedBox(height: 20),
+              new TextFormField(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  labelText: 'Sofre de alguma doença?',
+                  hintText: 'Ex.: bronquite ou nenhuma...',
+                ),
+              ),
+              SizedBox(height: 10),
+              new TextFormField(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  labelText: 'Fazendo uso de alguma medicação?',
+                  hintText: 'Ex.: antibióticos... ',
+                ),
+              ),
+              SizedBox(height: 10),
+              new TextFormField(
+                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  labelText: 'Faz uso de alguma suplementação?',
+                  hintText: 'Ex.: Vitamina C, Ômega 3... ',
+                ),
+              ),
+              SizedBox(height: 10),
+              new TextFormField(
+                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  labelText: 'Teve alguma alergia?',
+                  hintText: 'Ex.: Rinite',
+                ),
+              ),
+              SizedBox(height: 10),
+              new TextFormField(
+                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  labelText: 'Teve algum problema recentemente?',
+                  hintText: 'Ex.: problemas com alergia, hemorragia...',
+              ),
+              ),
+              SizedBox(height: 10),
+              new TextFormField(
+                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 60.0),
+                  labelText: 'Alguma outra observação?',
+                  hintText: 'Ex.: qualquer anotação.',
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,12.0),
-                child: Text("-HISTÓRICO CLINICA PREGRESSA-", style: TextStyle(fontSize: 18.0, color: Colors.blue),),
-              ),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'doenças infecciosas',
-                  hintText: 'Doeças Infecciosas: ',
-                ),
-              ),
-              SizedBox(height: 10),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'alergias',
-                  hintText: 'Alergias: ',
-                ),
-              ),
-              SizedBox(height: 10),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'cirurgias',
-                  hintText: 'Cirurgias: ',
-                ),
-              ),
-              SizedBox(height: 10),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'outros',
-                  hintText: 'Outros: ',
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,12.0),
-                child: Text("-HISTÓRICO OCUPACIONAL-", style: TextStyle(fontSize: 18.0, color: Colors.blue),),
-              ),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'funções anteriores',
-                  hintText: 'Funções Anteriores: ',
-                ),
-              ),
-              SizedBox(height: 10),
-              new TextField(
-                scrollPadding: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 5),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person, color: Colors.lightBlueAccent,),
-                  labelText: 'acidentes de trabalho',
-                  hintText: 'Acidentes de Trabalho: ',
-                ),
-              ),
-            ],
-          ),
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: Text('Salvar'),
+                  onPressed: () {
+                  },
+                ),)],
         ),
+
       ),
-    );
+    ));
   }
 }
